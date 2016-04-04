@@ -1,0 +1,20 @@
+objectclass ( 1.3.6.1.4.1.4203.666.210.100
+  NAME 'githubOrgPerson'
+  SUP 'inetOrgPerson'
+  STRUCTURAL
+  DESC 'GitHub Organizational Person'
+  MUST githubName
+  MAY githubToken
+)
+
+attributetype( 1.3.6.1.4.1.4203.666.210.90
+  NAME ( 'githubName' )
+  DESC 'GitHub username'
+  SUP name
+)
+
+attributetype( 1.3.6.1.4.1.4203.666.210.91
+  NAME ( 'githubToken' )
+  DESC 'GitHub OAuth Token'
+  SUP name
+)
