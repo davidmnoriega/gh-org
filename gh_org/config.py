@@ -1,22 +1,34 @@
+from ldap3 import Server, Connection, Tls
 try:
-    from ConfigParser import SafeConfigParser
+    from ConfigParser import SafeConfigParser, NoOptionError
 except ImportError:
-    from configparser import SafeConfigParser
-
-CONFIG_STRUCT = {'ldap': ['uri', 'binddn', 'bindpw', 'base']}
-
-
-class Section(object):
-    def __init__(self, section, section_dict):
-        for item in CONFIG_STRUCT[section]:
-            self.__setattr__(item, section_dict[item])
+    from configparser import SafeConfigParser, NoOptionError
 
 
 class Config(object):
     def __init__(self, configfile):
-        self.__parser = SafeConfigParser()
-        self.__parser.read(configfile)
+        self._parser = SafeConfigParser()
+        self._parser.read(configfile)
 
-        for section in CONFIG_STRUCT.keys():
-            section_dict = dict(self.__parser.items(section))
-            self.__setattr__(section, Section(section, section_dict))
+        self.tls = self._tls_config()
+        self.server = self._server_config()
+        self.conn = self._conn_config()
+
+    def _tls_config(self):
+        if self._parser.has_section('tls'):
+            pass
+        else:
+            return None
+
+    def _server_config(self):
+        if self._parser.has_item('ldap', 'uri'):
+            uri = self._parser.get('ldap', 'uri')
+        else:
+            raise NoOptionError
+
+        if self._parser.has_item('ldap', 'port'):
+            port = self._parser.has_item('ldap', 'port')
+        else:
+            port = None
+
+        return Server(host=uri, port=port, tls=self.tls)
