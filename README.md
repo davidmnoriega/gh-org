@@ -1,6 +1,9 @@
 # gh-org
 GitHub Organization Management
 
+[![Build Status](https://travis-ci.org/davidmnoriega/gh_org.svg?branch=develop)](https://travis-ci.org/davidmnoriega/gh_org)
+[![Coverage Status](https://coveralls.io/repos/github/davidmnoriega/gh_org/badge.svg?branch=develop)](https://coveralls.io/github/davidmnoriega/gh_org?branch=develop)
+
 The aim of this project is to make managing a large GitHub organization easier by using LDAP and
 Terraform.
 
